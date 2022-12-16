@@ -39,7 +39,7 @@ public class TestVideo extends BaseTest {
         personalPage.goToNotes();
         String postVideoHref = personalPage.getPostVideoHref();
 
-        assertEquals(videoHref, postVideoHref, "hrefs of found video and video in post must be same");
+        assertEquals(videoHref, postVideoHref, "hrefs of found video and video in post must be the same");
 
     }
 

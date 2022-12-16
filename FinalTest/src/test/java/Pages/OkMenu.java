@@ -10,7 +10,6 @@ public class OkMenu {
     private final SelenideElement GROUPS = $x("//a[@aria-label='Группы']"); // для групп
 
     // для видео
-    //private final SelenideElement GO_TO_PROFILE = $x("//a[@data-l='t,userPage']/..//div[@class='tico ellip']");
     private final SelenideElement GO_TO_PROFILE = $x("//a[@data-l='t,userPage']");
 
     public OkMenu() {

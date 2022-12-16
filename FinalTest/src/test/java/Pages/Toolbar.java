@@ -37,18 +37,17 @@ public class Toolbar {
     public void findPerson(String personName) {
         SEARCH.shouldBe(visible)
                 .setValue(personName)
-                .shouldHave(attribute("value", personName)); // проверить, что работает!
+                .shouldHave(attribute("value", personName));
 
-        //SelenideElement neededPerson = chooseNeededOne();
-        //neededPerson.should(exist).click();
+        //SelenideElement neededPerson = chooseNeededOne(personName); // ошибка тут при run. debug окей
+        //assert neededPerson != null;
         neededPerson.should(exist).click();
     }
 
-    private SelenideElement chooseNeededOne() {
-        List<SelenideElement> searchResults = $$x("//div[contains(@class, 'card__kq7ru')]");
+    private SelenideElement chooseNeededOne(String personName) {
+        List<SelenideElement> searchResults = $$x("//div[contains(@class, 'card-caption__a0i64')]");
         for(SelenideElement element : searchResults) {
-            //if (element.text().equals("technoPol23 technoPol23")) // тут выбираем подэлемент. Будет ли так работать?
-            if (element.getText().equals("technoPol23 technoPol23"))
+            if (element.getText().equals(personName + " " + personName))
                 return element;
         }
         return null;

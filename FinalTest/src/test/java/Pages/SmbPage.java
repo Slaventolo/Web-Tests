@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class SmbPage {
 
+    private final SelenideElement USER_NAME = $x("//*[contains(@class, 'user-profile-name')]");
     private final SelenideElement WRITE_MESSAGE_BUTTON = $x("//a[contains(@hrefattrs, 'ButtonsSendMessage')]");
 
     public SmbPage() {
@@ -16,6 +17,10 @@ public class SmbPage {
 
     public void check() {
         WRITE_MESSAGE_BUTTON.shouldBe(visible);
+    }
+
+    public String getUserName() {
+        return USER_NAME.shouldBe(visible).getText();
     }
 
     public void writeMessage() {

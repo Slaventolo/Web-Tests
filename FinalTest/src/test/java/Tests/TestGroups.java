@@ -30,7 +30,7 @@ public class TestGroups extends BaseTest {
 
          PolytechPage polytechPage = new PolytechPage();
             String groupName = polytechPage.getGroupName();
-            assertEquals(realGroupName, groupName);
+            assertEquals(realGroupName, groupName, "Names of group must be the same");
 
             polytechPage.subscribe();
             polytechPage.notifyOfPosts();

@@ -3,6 +3,8 @@ import Pages.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TestChatWithSmb extends BaseTest {
 
     private final String URL = "https://ok.ru/";
@@ -25,7 +27,10 @@ public class TestChatWithSmb extends BaseTest {
         Toolbar toolbarBot1 = new Toolbar();
             toolbarBot1.findPerson(LOGIN_2);
 
-        new SmbPage().writeMessage();
+        SmbPage smbPage = new SmbPage();
+            smbPage.writeMessage();
+            String userName2 = smbPage.getUserName();
+            assertEquals(userName2, LOGIN_2 + " " + LOGIN_2);
 
         MessagesPage messagesPageBot1 = new MessagesPage();
             messagesPageBot1.writeMessage(MESSAGE);
@@ -41,7 +46,9 @@ public class TestChatWithSmb extends BaseTest {
             toolbarBot2.goToMessages();
 
         MessagesPage messagesPageBot2 = new MessagesPage();
-            messagesPageBot2.reply(REPLY_TO_MESSAGE);
+            String userName1 = messagesPageBot2.getDialogName();
+            assertEquals(userName1, LOGIN_1 + " " + LOGIN_1);
+            messagesPageBot2.reply(LOGIN_1, REPLY_TO_MESSAGE);
             messagesPageBot2.closeMessageWindow();
     }
 
@@ -52,7 +59,7 @@ public class TestChatWithSmb extends BaseTest {
             toolbarBot2.goToMessages();
 
         MessagesPage messagesPageBot2 = new MessagesPage();
-            messagesPageBot2.chooseTheDialog("technoPol24 technoPol24");
+            messagesPageBot2.chooseTheDialog(LOGIN_1);
             messagesPageBot2.deleteMessage();
 
         toolbarBot2.logOut();
@@ -64,7 +71,7 @@ public class TestChatWithSmb extends BaseTest {
             toolbarBot1.goToMessages();
 
         MessagesPage messagesPageBot1 = new MessagesPage();
-            messagesPageBot1.chooseTheDialog("technoPol23 technoPol23");
+            messagesPageBot1.chooseTheDialog(LOGIN_2);
             messagesPageBot1.deleteMessage();
     }
 }
