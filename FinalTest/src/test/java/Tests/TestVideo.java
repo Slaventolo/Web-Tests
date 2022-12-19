@@ -5,11 +5,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestVideo extends BaseTest {
 
     private final String URL = "https://ok.ru/";
-
     private final String LOGIN = "technoPol24";
     private final String PASSWORD = "technoPolis2022";
 
@@ -18,37 +18,38 @@ public class TestVideo extends BaseTest {
 
     @Test
     public void testRepostVideo() {
-        LoginPage loginPage = new LoginPage();
-            loginPage.openSite(URL);
-            loginPage.insertData(LOGIN, PASSWORD);
+        LoginPage loginPage = new LoginPage(URL);
+            loginPage.login(LOGIN, PASSWORD);
 
         new Toolbar().goToVideos();
 
+        VideoCardsPage videoCardsPage = new VideoCardsPage();
+            videoCardsPage.insertVideoName(NAME_TO_INSERT);
+            videoCardsPage.clickOnNeededVideo(VIDEO_NAME);
+            String videoHref = videoCardsPage.getVideoHref();
+
         VideoPage videoPage = new VideoPage();
-            videoPage.insertVideoName(NAME_TO_INSERT);
-            videoPage.findVideo();
-            String videoHref = videoPage.getVideoHref();
             videoPage.likeVideo();
+            boolean isLiked = videoPage.checkIfLiked();
+            assertTrue(isLiked);
+
             videoPage.repostVideoToTheWall();
             videoPage.closeVideoWindow();
-
 
         new OkMenu().goToProfile();
 
         PersonalPage personalPage = new PersonalPage();
-        personalPage.goToNotes();
-        String postVideoHref = personalPage.getPostVideoHref();
-
-        assertEquals(videoHref, postVideoHref, "hrefs of found video and video in post must be the same");
-
+            personalPage.goToNotes();
+            String postVideoHref = personalPage.getPostVideoHref();
+            assertEquals(videoHref, postVideoHref, "hrefs of found video and video in post must be the same");
     }
 
     //@AfterEach
     @Test
     public void deleteVideo() {
-       LoginPage loginPage = new LoginPage();
-            loginPage.openSite(URL);
-            loginPage.insertData(LOGIN, PASSWORD);
+       /*LoginPage loginPage = new LoginPage(URL);
+            //loginPage.openSite(URL);
+            loginPage.login(LOGIN, PASSWORD);*/
 
         new OkMenu().goToProfile();
 
@@ -58,6 +59,9 @@ public class TestVideo extends BaseTest {
 
         VideoPage videoPage = new VideoPage();
             videoPage.unlikeVideo();
+            boolean isUnliked = videoPage.checkIfUnliked();
+            assertTrue(isUnliked);
+
             videoPage.closeVideoWindow();
 
             personalPage.deleteVideo();

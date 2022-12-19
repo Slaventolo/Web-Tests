@@ -20,9 +20,9 @@ public class TestChatWithSmb extends BaseTest {
 
     @Test
     public void testChatWithSmb() {
-        LoginPage bot1 = new LoginPage();
-            bot1.openSite(URL);
-            bot1.insertData(LOGIN_1, PASSWORD_1);
+        LoginPage bot1 = new LoginPage(URL);
+            //bot1.openSite(URL);
+            bot1.login(LOGIN_1, PASSWORD_1);
 
         Toolbar toolbarBot1 = new Toolbar();
             toolbarBot1.findPerson(LOGIN_2);
@@ -39,8 +39,8 @@ public class TestChatWithSmb extends BaseTest {
         toolbarBot1.logOut();
 
 
-        LoginPage bot2 = new LoginPage();
-            bot2.insertData(LOGIN_2, PASSWORD_2);
+        LoginPage bot2 = new LoginPage(URL);
+            bot2.login(LOGIN_2, PASSWORD_2);
 
         Toolbar toolbarBot2 = new Toolbar();
             toolbarBot2.goToMessages();
@@ -64,8 +64,8 @@ public class TestChatWithSmb extends BaseTest {
 
         toolbarBot2.logOut();
 
-        LoginPage bot1 = new LoginPage();
-        bot1.insertData(LOGIN_1, PASSWORD_1);
+        LoginPage bot1 = new LoginPage(URL);
+        bot1.login(LOGIN_1, PASSWORD_1);
 
         Toolbar toolbarBot1 = new Toolbar();
             toolbarBot1.goToMessages();

@@ -11,20 +11,14 @@ import static com.codeborne.selenide.Selenide.$x;
 public class MessagesPage {
 
     //private final SelenideElement WRITE_MESSAGE = $x("//a[contains(@hrefattrs, 'ButtonsSendMessage')]"); // не работает
-    private final SelenideElement MESSAGE_FIELD = $x("//msg-input[@placeholder='Напишите сообщение...']");
+    //private final SelenideElement MESSAGE_FIELD = $x("//msg-input[@placeholder='Напишите сообщение...']"); // не работает
+    //private final SelenideElement DIALOGS_FIELD = $x("//div[contains(@class, 'list_conversations')]"); // для конструктора, кот не работает
+    private final SelenideElement MESSAGE_FIELD = $x("//div[@data-tsid='write_msg_input-input']");
     private final SelenideElement SEND_MESSAGE_BUTTON = $x("//msg-button[@data-tsid='button_send']");
 
     private final SelenideElement CLOSE_MESSAGES_WINDOW = $x("//div[@data-l='t,closeLayer']");
     //private final SelenideElement bot1Message = $x("//msg-chats-list-item[@data-l='t,chatsListItem']/a"); // temporary
     private final SelenideElement bot1Message = $x("//div[@data-tsid='conversation_name']"); // temporary
-
-    public MessagesPage() {
-        check();
-    }
-
-    private void check() {
-
-    }
 
     public void chooseTheDialog(String DialogName) {
         //SelenideElement bot1Message = chooseNeededDialog(DialogName);
@@ -64,7 +58,6 @@ public class MessagesPage {
     }
 
     //@AfterEach
-
     private final SelenideElement MY_MESSAGE_LINE = $x("//msg-message[@mine='' and @class='']");
     private final SelenideElement MESSAGE_MENU = $x("//msg-icon[@icon='menu']");
     private final SelenideElement DELETE_BUTTON = $x("//msg-l10n[@key='message-action-remove']");
