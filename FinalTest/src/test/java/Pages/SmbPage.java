@@ -2,7 +2,6 @@ package Pages;
 
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -12,10 +11,11 @@ public class SmbPage {
     private final SelenideElement WRITE_MESSAGE_BUTTON = $x("//a[contains(@hrefattrs, 'ButtonsSendMessage')]");
 
     public SmbPage() {
-        check();
+        //check();
     }
 
     public void check() {
+        USER_NAME.should(visible);
         WRITE_MESSAGE_BUTTON.shouldBe(visible);
     }
 
@@ -24,6 +24,6 @@ public class SmbPage {
     }
 
     public void writeMessage() {
-        WRITE_MESSAGE_BUTTON.should(exist).click();
+        WRITE_MESSAGE_BUTTON.click();
     }
 }

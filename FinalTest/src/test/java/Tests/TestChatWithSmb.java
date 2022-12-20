@@ -21,19 +21,20 @@ public class TestChatWithSmb extends BaseTest {
     @Test
     public void testChatWithSmb() {
         LoginPage bot1 = new LoginPage(URL);
-            //bot1.openSite(URL);
             bot1.login(LOGIN_1, PASSWORD_1);
 
         Toolbar toolbarBot1 = new Toolbar();
             toolbarBot1.findPerson(LOGIN_2);
 
         SmbPage smbPage = new SmbPage();
-            smbPage.writeMessage();
             String userName2 = smbPage.getUserName();
             assertEquals(userName2, LOGIN_2 + " " + LOGIN_2);
+            smbPage.writeMessage();
 
         MessagesPage messagesPageBot1 = new MessagesPage();
             messagesPageBot1.writeMessage(MESSAGE);
+            String message = messagesPageBot1.checkMyLastMessage();
+            assertEquals(message, MESSAGE);
             messagesPageBot1.closeMessageWindow();
 
         toolbarBot1.logOut();
@@ -46,32 +47,44 @@ public class TestChatWithSmb extends BaseTest {
             toolbarBot2.goToMessages();
 
         MessagesPage messagesPageBot2 = new MessagesPage();
-            String userName1 = messagesPageBot2.getDialogName();
+            String userName1 = messagesPageBot2.findDialog(LOGIN_1 + " " + LOGIN_1);
             assertEquals(userName1, LOGIN_1 + " " + LOGIN_1);
-            messagesPageBot2.reply(LOGIN_1, REPLY_TO_MESSAGE);
+
+            messagesPageBot2.clickOnDialog();
+            messagesPageBot2.writeMessage(REPLY_TO_MESSAGE);
+            String reply = messagesPageBot2.checkMyLastMessage();
+            assertEquals(reply, REPLY_TO_MESSAGE);
+
             messagesPageBot2.closeMessageWindow();
     }
 
     @AfterEach
+    //@Test
     public void cleanMessages() {
 
         Toolbar toolbarBot2 = new Toolbar();
             toolbarBot2.goToMessages();
 
         MessagesPage messagesPageBot2 = new MessagesPage();
-            messagesPageBot2.chooseTheDialog(LOGIN_1);
+            String bot1Name = messagesPageBot2.findDialog(LOGIN_1 + " " + LOGIN_1);
+            assertEquals(bot1Name, LOGIN_1 + " " + LOGIN_1);
+
+            messagesPageBot2.clickOnDialog();
             messagesPageBot2.deleteMessage();
 
         toolbarBot2.logOut();
 
         LoginPage bot1 = new LoginPage(URL);
-        bot1.login(LOGIN_1, PASSWORD_1);
+            bot1.login(LOGIN_1, PASSWORD_1);
 
         Toolbar toolbarBot1 = new Toolbar();
             toolbarBot1.goToMessages();
 
         MessagesPage messagesPageBot1 = new MessagesPage();
-            messagesPageBot1.chooseTheDialog(LOGIN_2);
+            String bot2Name = messagesPageBot1.findDialog(LOGIN_2 + " " + LOGIN_2);
+            assertEquals(bot2Name, LOGIN_2 + " " + LOGIN_2);
+
+            messagesPageBot1.clickOnDialog();
             messagesPageBot1.deleteMessage();
     }
 }

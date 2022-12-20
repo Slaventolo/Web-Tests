@@ -1,6 +1,7 @@
 package Tests;
 
 import Pages.*;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +26,9 @@ public class TestVideo extends BaseTest {
 
         VideoCardsPage videoCardsPage = new VideoCardsPage();
             videoCardsPage.insertVideoName(NAME_TO_INSERT);
-            videoCardsPage.clickOnNeededVideo(VIDEO_NAME);
+            videoCardsPage.chooseNeededVideo(VIDEO_NAME);
             String videoHref = videoCardsPage.getVideoHref();
+            videoCardsPage.clickOnNeededVideo();
 
         VideoPage videoPage = new VideoPage();
             videoPage.likeVideo();
@@ -40,22 +42,25 @@ public class TestVideo extends BaseTest {
 
         PersonalPage personalPage = new PersonalPage();
             personalPage.goToNotes();
-            String postVideoHref = personalPage.getPostVideoHref();
+
+        NotesPage notesPage = new NotesPage();
+            String postVideoHref = notesPage.getPostVideoHref();
             assertEquals(videoHref, postVideoHref, "hrefs of found video and video in post must be the same");
     }
 
-    //@AfterEach
-    @Test
+    @AfterEach
+    //@Test
     public void deleteVideo() {
-       /*LoginPage loginPage = new LoginPage(URL);
-            //loginPage.openSite(URL);
-            loginPage.login(LOGIN, PASSWORD);*/
+/*       LoginPage loginPage = new LoginPage(URL);
+            loginPage.login(LOGIN, PASSWORD);
 
         new OkMenu().goToProfile();
 
         PersonalPage personalPage = new PersonalPage();
-            personalPage.goToNotes();
-            personalPage.clickOnVideo();
+            personalPage.goToNotes();*/
+
+        NotesPage notesPage = new NotesPage();
+            notesPage.clickOnVideo();
 
         VideoPage videoPage = new VideoPage();
             videoPage.unlikeVideo();
@@ -64,6 +69,6 @@ public class TestVideo extends BaseTest {
 
             videoPage.closeVideoWindow();
 
-            personalPage.deleteVideo();
+            notesPage.deleteVideo(VIDEO_NAME);
     }
 }

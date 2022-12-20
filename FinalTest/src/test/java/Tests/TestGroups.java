@@ -34,23 +34,11 @@ public class TestGroups extends BaseTest {
             anyGroupPage.subscribe();
             boolean isSubscribed = anyGroupPage.checkIfSubscribed();
             assertTrue(isSubscribed);
-
-            /*anyGroupPage.notifyOfPosts();
-            boolean allowedNotifications = anyGroupPage.checkIfAllowedNotifications();
-            assertTrue(allowedNotifications);
-
-            anyGroupPage.allowGroupMessages();
-            boolean allowedMessages = anyGroupPage.checkIfAllowedMessages();
-            assertTrue(allowedMessages);*/
     }
 
     @AfterEach
     public void unsubscribe() {
         AnyGroupPage anyGroupPage = new AnyGroupPage();
-            /*anyGroupPage.restrictGroupMessages();
-            boolean restrictedMessages = anyGroupPage.checkIfRestrictedMessages();
-            assertTrue(restrictedMessages);*/
-
             anyGroupPage.unsubscribe();
             boolean isUnsubscribed = anyGroupPage.checkIfUnsubscribed();
             assertTrue(isUnsubscribed);

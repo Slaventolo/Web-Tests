@@ -13,9 +13,9 @@ public class VideoCardsPage {
     private final SelenideElement SEARCH = $x("//input[@placeholder='Поиск видео']");
     private final SelenideElement SEARCH_BUTTON = $x("//div[@class='button-pro js-search-submit']");
 
-    //private final SelenideElement neededVideo = $x("//div[@data-id='349007972891']"); // temporary
-    private final SelenideElement neededVideo = $x("//div[@data-id='349007972891']/div/a"); // temporary
-    //private SelenideElement neededVideo; // temporary
+    //private final SelenideElement neededVideo = $x("//div[@data-id='349007972891']/div/a"); // temporary
+
+    private SelenideElement neededVideo;
 
     public VideoCardsPage() {
         check();
@@ -23,7 +23,6 @@ public class VideoCardsPage {
 
     private void check() {
         SEARCH.shouldBe(visible);
-        SEARCH_BUTTON.shouldBe(visible);
     }
 
     public void insertVideoName(String videoName) {
@@ -35,24 +34,25 @@ public class VideoCardsPage {
         SEARCH_BUTTON.click();
     }
 
-    public void clickOnNeededVideo(String videoName) {
-        /*SelenideElement neededVideo = chooseNeededVideo(videoName);
-        assert neededVideo != null;*/
-        neededVideo.click();
-    }
 
-    private SelenideElement chooseNeededVideo(String videoName) {
-        //sleep(8000);
-        //List<SelenideElement> videos = $$x("//div[contains(@class, 'item-movie')]");
-        List<SelenideElement> videos = $$x("//a[@class='video-card_n ellip']");
-        for (SelenideElement video : videos) {
+    public void chooseNeededVideo(String videoName) {
+        sleep(5000);
+        List<SelenideElement> videoNames = $$x("//a[@class='video-card_n ellip']");  //    //div[contains(@class, 'item-movie')]     //a[@class='video-card_n ellip']
+        for (SelenideElement video : videoNames) {
             if (video.has(exactText(videoName)))
-                return video;
+                neededVideo = video;
         }
-        return null;
     }
 
     public String getVideoHref () {
-        return neededVideo.should(exist).getAttribute("href");
+        assert neededVideo != null;
+        return neededVideo.getAttribute("href");
     }
+
+    public void clickOnNeededVideo() {
+        assert neededVideo != null;
+        neededVideo.click();
+    }
+
+
 }
